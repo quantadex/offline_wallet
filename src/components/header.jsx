@@ -20,7 +20,7 @@ const container = css`
 
 export default class Header extends React.Component {
     render() {
-        const tabs = ["Generate Key"]
+        const tabs = ["Generate Key", "Decrypt Wallet"]
         return (
             <div className={container + " border-bottom d-flex mb-3"}>
                 <div className="brand border-right px-4 py-2"><b>QUANTA OFFLINE WALLET</b></div>

@@ -7,39 +7,18 @@ import jsPDF from 'jspdf'
 
 const container = css`
     width: 100%;
-    max-width: 1000px;
     margin: auto;
-
-    label, input {
-        height: 40px;
-        line-height: 40px;
-        padding: 0 15px;
-    }
 
     label {
         width: 100px;
-        text-align: center;
-        font-weight: bold;
-        border: 1px solid #ccc;
-        border-right: 0;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
     }
 
     input {
         flex: auto;
-        border: 1px solid #ccc;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
     }
 
     input:read-only {
         background: #eee;
-    }
-
-    input:focus {
-        outline: 0;
-
     }
 
     .encrypt {
@@ -172,11 +151,11 @@ export default class GenerateKey extends React.Component {
                 <span className="text-muted">or enter your own private key for encryption</span>
                 <div className="d-flex mt-3">
                     <label>Public</label>
-                    <input type="text" readOnly spellCheck="false" value={this.state.publicKey} />
+                    <input type="text" className="input-with-label" readOnly spellCheck="false" value={this.state.publicKey} />
                 </div>
                 <div className="d-flex mt-3 position-relative">
                     <label>Private</label>
-                    <input type="text" spellCheck="false" 
+                    <input type="text" spellCheck="false" className="input-with-label"
                         placeholder="Private Key"
                         onChange={(e) => this.handleChange(e.target.value)} value={this.state.privateKey} />
                     {this.state.error ? <span className="error text-danger">{this.state.errMsg}</span> : null}
