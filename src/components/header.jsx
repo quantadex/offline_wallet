@@ -2,6 +2,9 @@ import React from 'react';
 import { css } from 'emotion';
 
 const container = css`
+    .brand {
+        user-select: none;
+    }
     .header-item {
         border-bottom: 2px solid transparent;
     }
@@ -17,9 +20,10 @@ const container = css`
 
 export default class Header extends React.Component {
     render() {
-        const tabs = ["Generate Key", "Encrypt Wallet"]
+        const tabs = ["Generate Key"]
         return (
-            <div className={container + " border-bottom d-flex"}>
+            <div className={container + " border-bottom d-flex mb-3"}>
+                <div className="brand border-right px-4 py-2"><b>QUANTA OFFLINE WALLET</b></div>
                 {tabs.map((tab, index) => {
                     return (
                         <div key={index} 

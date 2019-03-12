@@ -4,7 +4,6 @@ import { injectGlobal, css } from 'emotion'
 
 import Header from './components/header.jsx'
 import GenerateKey from './components/generate_key.jsx'
-import EncryptKey from './components/encrypt_key.jsx'
 
 injectGlobal`
     .cursor-pointer {
@@ -31,7 +30,7 @@ class Container extends React.Component {
     }
 
     render () {
-        const tabContent = [<GenerateKey />, <EncryptKey />]
+        const tabContent = [<GenerateKey />]
         return (
             <div className={container}>
                 <Header selected={this.state.selectedTab} changeTab={this.changeTab.bind(this)} />
