@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from 'emotion';
 
 import WalletApi from "../api/WalletApi";
-import { PrivateKey, encryptWallet } from "@quantadex/bitsharesjs";
+import { hash, PrivateKey, encryptWallet } from "@quantadex/bitsharesjs";
 import jsPDF from 'jspdf'
 
 const container = css`
@@ -60,6 +60,20 @@ export default class GenerateKey extends React.Component {
     generateKey() {
         const key = WalletApi.generate_key()
         this.setState({publicKey: key.publicKey, privateKey: key.privateKey, brainKey: key.brainKey, error: false})
+    }
+
+    generateCustom(seed) {
+        this.setState({ brainKey: seed })
+        try {
+            var digest = hash.sha512(seed);
+            console.log("hash512=", digest);
+            var privateKey = PrivateKey.fromBuffer(hash.sha256(digest));
+            var publicKey = privateKey.toPublicKey().toString()
+            this.setState({ privateKey:privateKey.toWif(), publicKey, error: false })
+        } catch (err) {
+            console.log(err);
+            this.setState({ error: true, errMsg: "Invalid Key", publicKey: "" })
+        }         
     }
 
     handleChange(e) {
@@ -149,6 +163,13 @@ export default class GenerateKey extends React.Component {
             <div className={container}>
                 <button className="btn btn-primary mr-2" onClick={this.generateKey}>Generate</button>
                 <span className="text-muted">or enter your own private key for encryption</span>
+                <div className="d-flex mt-3">
+                    <label>SEED</label>
+                    <input type="text" className="input-with-label" spellCheck="false" 
+                            value={this.state.brainKey} 
+                        onChange={(e) => this.generateCustom(e.target.value)} 
+                        />
+                </div>
                 <div className="d-flex mt-3">
                     <label>Public</label>
                     <input type="text" className="input-with-label" readOnly spellCheck="false" value={this.state.publicKey} />
